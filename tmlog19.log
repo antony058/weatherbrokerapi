@@ -1,0 +1,12 @@
+{"id":"192.168.127.95.tm152605111580100002","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm2","state":"COMMITTING","expires":1526051125862,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111580100002","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm2","state":"TERMINATED","expires":1526051126017,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111618400003","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm3","state":"COMMITTING","expires":1526051126135,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111618400003","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm3","state":"TERMINATED","expires":1526051126136,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111630600004","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm4","state":"COMMITTING","expires":1526051126213,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111630600004","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm4","state":"TERMINATED","expires":1526051126214,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111633700005","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm5","state":"COMMITTING","expires":1526051126292,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111633700005","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm5","state":"TERMINATED","expires":1526051126292,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111642800006","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm6","state":"COMMITTING","expires":1526051126332,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111642800006","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm6","state":"TERMINATED","expires":1526051126332,"resourceName":"postgresDatasourceCustomBean"}]}
+{"id":"192.168.127.95.tm152605111518300001","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm1","state":"COMMITTING","expires":1526051125394,"resourceName":"atomikosConnectionFactoryCustomBeanAPI"}]}
+{"id":"192.168.127.95.tm152605111518300001","wasCommitted":true,"participants":[{"uri":"192.168.127.95.tm1","state":"TERMINATED","expires":1526051126745,"resourceName":"atomikosConnectionFactoryCustomBeanAPI"}]}
