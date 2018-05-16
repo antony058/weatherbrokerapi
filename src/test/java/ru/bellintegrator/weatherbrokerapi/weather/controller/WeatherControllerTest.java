@@ -9,11 +9,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.bellintegrator.weatherbrokerapi.WeatherbrokerapiApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {WeatherbrokerapiApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@ActiveProfiles({"test"})
 public class WeatherControllerTest {
     private TestRestTemplate testRestTemplate = new TestRestTemplate();
     private HttpHeaders headers = new HttpHeaders();

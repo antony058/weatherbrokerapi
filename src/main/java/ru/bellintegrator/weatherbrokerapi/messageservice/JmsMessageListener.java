@@ -29,7 +29,10 @@ public class JmsMessageListener {
 
             log.info("Данные о погоде получены из topic");
             ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView weatherView =
-                    new ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView(view.getCity(), view.getDate(), view.getTemp(), view.getText());
+                    new ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView(
+                            view.getCity(), view.getDate(),
+                            view.getTemp(), view.getText());
+
             weatherService.save(weatherView);
         }
     }
