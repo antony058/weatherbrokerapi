@@ -4,10 +4,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.weatherbrokerapi.weather.service.WeatherService;
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
@@ -24,10 +21,8 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @RequestMapping(value = "/weather/{city}", method = {RequestMethod.GET})
+    @GetMapping("/weather/{city}")
     public ResponseEntity<WeatherView> getWeather(@PathVariable String city) throws NotFoundException {
-        WeatherView weatherView = weatherService.getCityWeather(city);
-
-        return new ResponseEntity<WeatherView>(weatherView, HttpStatus.OK);
+        return ResponseEntity.ok(weatherService.getCityWeather(city));
     }
 }

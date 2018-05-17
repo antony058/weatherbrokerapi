@@ -4,10 +4,13 @@ D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrok
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\WeatherbrokerapiApplication.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\weather\service\impl\WeatherServiceImpl.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\city\dao\CityDao.java
+D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\fileinteraction\FileCommunicator.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\messageservice\JmsMessageListener.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\weather\dao\impl\WeatherDaoImpl.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\city\controller\CityController.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\config\AppDevelopConfig.java
+D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\directorywatcher\DirectoryWatcher.java
+D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\directorywatcher\task\WatchTask.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\weather\dao\WeatherDao.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbrokerapi\weather\view\Query.java
 D:\weatherbrokerapi\weatherbrokerapi\src\main\java\ru\bellintegrator\weatherbroker\server\weather\view\WeatherView.java

@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExceptionHandlingController {
     private Logger log = LoggerFactory.getLogger(ExceptionHandlingController.class);
 
-    @ResponseBody
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
         log.error(ex.getMessage());
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ResponseBody
     @ExceptionHandler(value = Throwable.class)
     public ResponseEntity<String> handleThrowable(Throwable ex) {
         log.error(ex.getMessage());

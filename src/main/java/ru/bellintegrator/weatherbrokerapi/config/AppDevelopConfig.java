@@ -14,6 +14,9 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 import javax.jms.Destination;
 import javax.jms.XAConnectionFactory;
 import javax.transaction.SystemException;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.WatchService;
 import java.util.Properties;
 
 @Configuration
@@ -101,12 +104,17 @@ public class AppDevelopConfig {
     }
 
     @Bean(name = "transactionServiceImp", initMethod = "init", destroyMethod = "shutdownForce")
-    UserTransactionServiceImp transactionServiceImp() {
+    public UserTransactionServiceImp transactionServiceImp() {
         Properties properties = new Properties();
         properties.setProperty("com.atomikos.icatch.log_base_name", "my_custom_log_file");
 
         UserTransactionServiceImp transactionServiceImp = new UserTransactionServiceImp(properties);
 
         return transactionServiceImp;
+    }
+
+    @Bean
+    public WatchService watchService() throws IOException {
+        return FileSystems.getDefault().newWatchService();
     }
 }
