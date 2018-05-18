@@ -18,12 +18,14 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.WatchService;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 @Profile("develop")
 public class AppDevelopConfig {
 
-    @Bean(initMethod = "init", destroyMethod = "close")
+    /*@Bean(initMethod = "init", destroyMethod = "close")
     @DependsOn("transactionServiceImp")
     public UserTransactionManager jtaTransactionManager() {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
@@ -111,10 +113,17 @@ public class AppDevelopConfig {
         UserTransactionServiceImp transactionServiceImp = new UserTransactionServiceImp(properties);
 
         return transactionServiceImp;
+    }*/
+
+    @Bean
+    @Scope("prototype")
+    public WatchService watchService() throws IOException {
+        return FileSystems.getDefault().newWatchService();
     }
 
     @Bean
-    public WatchService watchService() throws IOException {
-        return FileSystems.getDefault().newWatchService();
+    @Scope("prototype")
+    public ExecutorService executorServiceSingleThread() {
+        return Executors.newCachedThreadPool();
     }
 }

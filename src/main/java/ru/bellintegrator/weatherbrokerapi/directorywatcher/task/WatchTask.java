@@ -1,49 +1,70 @@
 package ru.bellintegrator.weatherbrokerapi.directorywatcher.task;
 
 import javassist.NotFoundException;
-import org.springframework.context.ApplicationContext;
-import ru.bellintegrator.weatherbrokerapi.fileinteraction.FileCommunicator;
-import ru.bellintegrator.weatherbrokerapi.weather.service.impl.WeatherServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import ru.bellintegrator.weatherbrokerapi.directorywatcher.weatherfile.WeatherFile;
+import ru.bellintegrator.weatherbrokerapi.weather.service.WeatherService;
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class WatchTask implements Runnable {
-    private WatchService watchService;
-    private Path path;
-    private String directoryPath;
-    private WeatherServiceImpl weatherService;
+    private final WatchService watchService;
+    private final WeatherService weatherService;
 
-    public WatchTask(final WatchService watchService,final  String directoryPath,
-                     ApplicationContext applicationContext) throws IOException {
+    private Path path;
+    private WeatherFile weatherFile;
+    private String directoryPath;
+
+    @Autowired
+    public WatchTask(WatchService watchService, WeatherService weatherService) {
         this.watchService = watchService;
+        this.weatherService = weatherService;
+    }
+
+    public void setDirectoryPath(String directoryPath) throws IOException {
         this.directoryPath = directoryPath;
-        this.path = Paths.get(directoryPath);
-        weatherService = applicationContext.getBean(WeatherServiceImpl.class);
 
         pathRegister();
     }
 
+    public void setWeatherFile(WeatherFile weatherFile) {
+        this.weatherFile = weatherFile;
+    }
+
     private void pathRegister() throws IOException {
+        path = Paths.get(directoryPath);
         path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
     }
 
     @Override
     public void run() {
+        WatchKey key = null;
         try {
-            WatchKey key;
             while((key = watchService.take()) != null) {
                 for (WatchEvent<?> event: key.pollEvents()) {
-                    String fullPath = directoryPath + "\\" + event.context();
-                    addWeatherListToDatabase(FileCommunicator.readFile(fullPath));
+                    String filePath = directoryPath + "\\" + event.context();
+                    try {
+                        addWeatherListToDatabase(weatherFile.readFile(filePath));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 key.reset();
             }
-        } catch (InterruptedException | IOException | NotFoundException e) {
+        } catch (InterruptedException | NotFoundException e) {
             e.printStackTrace();
+        } finally {
+            if (key != null) {
+                key.reset();
+            }
         }
     }
 

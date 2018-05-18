@@ -1,42 +1,22 @@
 package ru.bellintegrator.weatherbrokerapi.fileinteraction;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class FileCommunicator {
-    public static List<WeatherView> readFile(String filePath) throws IOException {
-        File file = new File(filePath);
-        FileInputStream inputStream = new FileInputStream(file);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    private String filePath;
 
-        WeatherView weatherView = null;
-        List<WeatherView> weatherViews = new ArrayList<>();
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] weatherAttr = line.split(",");
-
-            if (weatherAttr.length != 4)
-                continue;
-
-            weatherView = new WeatherView(
-                    weatherAttr[0],
-                    weatherAttr[1],
-                    Integer.valueOf(weatherAttr[2]),
-                    weatherAttr[3]);
-
-            weatherViews.add(weatherView);
-        }
-
-        reader.close();
-        inputStream.close();
-
-        boolean isSuccessDeleted = file.delete();
-        System.out.println("Success deleted: " + isSuccessDeleted);
-
-        return weatherViews;
+    public List<WeatherView> readFile() throws IOException {
+        return null;
     }
 }
