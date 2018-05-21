@@ -13,6 +13,9 @@ import ru.bellintegrator.weatherbrokerapi.weather.model.Weather;
 import ru.bellintegrator.weatherbrokerapi.weather.service.WeatherService;
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 @Service
 public class WeatherServiceImpl implements WeatherService {
 
@@ -32,7 +35,7 @@ public class WeatherServiceImpl implements WeatherService {
     public void save(WeatherView weatherView) throws NotFoundException {
         City city = cityService.loadByName(weatherView.getCity());
 
-        Weather weather = new Weather(weatherView.getTemp(), weatherView.getText());
+        Weather weather = new Weather(weatherView.getTemp(), weatherView.getText(), weatherView.getDate());
         weather.setCity(city);
 
         city.setWeather(weather);
@@ -46,5 +49,10 @@ public class WeatherServiceImpl implements WeatherService {
         Weather weather = weatherDao.getWeatherByCity(cityName);
 
         return WeatherView.mapToWeatherView(weather, cityName);
+    }
+
+    @Override
+    public void saveBatch(Set<WeatherView> viewSet) {
+        weatherDao.saveBatch(new ArrayList<>(viewSet));
     }
 }

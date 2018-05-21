@@ -7,6 +7,7 @@ import ru.bellintegrator.weatherbrokerapi.weather.utils.mapper.WeatherMapper;
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class TextWeatherFile implements WeatherFile {
         FileInputStream inputStream = new FileInputStream(file);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        WeatherView weatherView;
+        WeatherView weatherView = null;
         List<WeatherView> weatherViews = new ArrayList<>();
 
         String line;
@@ -30,6 +31,8 @@ public class TextWeatherFile implements WeatherFile {
             } catch (ValidationException e) {
                 e.printStackTrace();
                 continue;
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
             weatherViews.add(weatherView);

@@ -10,6 +10,7 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.transaction.jta.JtaTransactionManager;
+import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
 import javax.jms.Destination;
 import javax.jms.XAConnectionFactory;
@@ -17,7 +18,10 @@ import javax.transaction.SystemException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.WatchService;
+import java.util.Collections;
 import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,7 +29,7 @@ import java.util.concurrent.Executors;
 @Profile("develop")
 public class AppDevelopConfig {
 
-    /*@Bean(initMethod = "init", destroyMethod = "close")
+    @Bean(initMethod = "init", destroyMethod = "close")
     @DependsOn("transactionServiceImp")
     public UserTransactionManager jtaTransactionManager() {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
@@ -113,7 +117,7 @@ public class AppDevelopConfig {
         UserTransactionServiceImp transactionServiceImp = new UserTransactionServiceImp(properties);
 
         return transactionServiceImp;
-    }*/
+    }
 
     @Bean
     @Scope("prototype")
@@ -125,5 +129,10 @@ public class AppDevelopConfig {
     @Scope("prototype")
     public ExecutorService executorServiceSingleThread() {
         return Executors.newCachedThreadPool();
+    }
+
+    @Bean
+    public Set<WeatherView> concurrentWeatherViewSet() {
+        return Collections.newSetFromMap(new ConcurrentHashMap<>());
     }
 }

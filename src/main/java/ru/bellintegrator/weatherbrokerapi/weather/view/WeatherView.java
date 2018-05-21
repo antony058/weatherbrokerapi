@@ -1,18 +1,24 @@
 package ru.bellintegrator.weatherbrokerapi.weather.view;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ru.bellintegrator.weatherbrokerapi.weather.model.Weather;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 public class WeatherView implements Serializable {
     private static final long serialVersionUID = -295422703255886286L;
+    transient private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     /*
      * дата
      */
-    private String date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Date date;
 
     /*
      * Температура
@@ -33,7 +39,7 @@ public class WeatherView implements Serializable {
 
     }
 
-    public WeatherView(String city, String date, Integer temp, String text) {
+    public WeatherView(String city, Date date, Integer temp, String text) {
         this.city = city;
         this.date = date;
         this.temp = temp;
@@ -41,11 +47,11 @@ public class WeatherView implements Serializable {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(final String date) {
+    public void setDate(final Date date) {
         this.date = date;
     }
 
@@ -90,7 +96,7 @@ public class WeatherView implements Serializable {
      * @return возвращает объект представления погоды конкретного города
      */
     @SuppressWarnings("unchecked")
-    public static WeatherView mapToWeather(final Query query, final String city) {
+    public static WeatherView mapToWeather(final Query query, final String city) throws ParseException {
         LinkedHashMap<String, Object> weatherData =
                 (LinkedHashMap<String, Object>) query.getQuery();
 
@@ -105,7 +111,7 @@ public class WeatherView implements Serializable {
 
         return new WeatherView(
                 city,
-                (String) weatherData.get("date"),
+                dateFormat.parse((String) weatherData.get("date")),
                 Integer.valueOf((String) weatherData.get("temp")),
                 (String) weatherData.get("text"));
     }
@@ -121,7 +127,7 @@ public class WeatherView implements Serializable {
     public static WeatherView mapToWeatherView(final Weather weather, final String cityName) {
         return new WeatherView(
                 cityName,
-                null,
+                weather.getDate(),
                 weather.getTemperature(),
                 weather.getDescription()
         );

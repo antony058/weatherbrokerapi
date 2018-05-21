@@ -13,6 +13,9 @@ import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
 import javax.persistence.NoResultException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,22 +25,25 @@ public class WeatherServiceTest {
     private WeatherService weatherService;
 
     private WeatherView weatherView;
+    private SimpleDateFormat dateFormat;
 
     @Before
     public void setUp() {
         weatherDao = mock(WeatherDao.class);
         cityService = mock(CityService.class);
         weatherService = new WeatherServiceImpl(weatherDao, cityService);
+
+        dateFormat = new SimpleDateFormat("dd-MM-yy");
     }
 
     @Before
-    public void setUpView() {
-        weatherView = new WeatherView("Penza", "01-01-2019", 22, "Sunny");
+    public void setUpView() throws ParseException {
+        weatherView = new WeatherView("Penza", dateFormat.parse("01-01-2019"), 22, "Sunny");
     }
 
     @Test
-    public void getCityWeather() throws NotFoundException {
-        Weather weather = new Weather(22, "Sunny");
+    public void getCityWeather() throws NotFoundException, ParseException {
+        Weather weather = new Weather(22, "Sunny", dateFormat.parse("12-12-12"));
         weather.setCity(new City("Penza"));
 
         when(weatherDao.getWeatherByCity("Penza")).thenReturn(weather);

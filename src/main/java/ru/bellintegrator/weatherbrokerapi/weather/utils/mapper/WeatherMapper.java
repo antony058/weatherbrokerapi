@@ -7,12 +7,15 @@ import ru.bellintegrator.weatherbrokerapi.weather.utils.validation.WeatherValida
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class WeatherMapper {
     private final static String INCORRECT_ATTR_LENGTH = "Количество атрибутов не может быть не равным 4";
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-    public static WeatherView fromString(String weatherLine) throws ValidationException {
+    public static WeatherView fromString(String weatherLine) throws ValidationException, ParseException {
         String[] weatherAttr = weatherLine.split(",");
         if (weatherAttr.length != 4) {
             throw new ValidationException(INCORRECT_ATTR_LENGTH);
@@ -24,7 +27,7 @@ public class WeatherMapper {
             view.setCity(weatherAttr[0]);
 
         if (WeatherValidator.isValidDate(weatherAttr[1]))
-            view.setDate(weatherAttr[1]);
+            view.setDate(dateFormat.parse(weatherAttr[1]));
 
         if (WeatherValidator.isValidTemperature(weatherAttr[2]))
             view.setTemp(Integer.valueOf(weatherAttr[2]));
@@ -37,11 +40,12 @@ public class WeatherMapper {
 
     public static List<WeatherView> fromJsonString(String json) throws IOException, ValidationException {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setDateFormat(dateFormat);
         List<WeatherView> weatherViews = objectMapper.readValue(json, new TypeReference<List<WeatherView>>(){});
 
         for (WeatherView view: weatherViews) {
             WeatherValidator.isValidCityName(view.getCity());
-            WeatherValidator.isValidDate(view.getDate());
+            WeatherValidator.isValidDate(view.getDate().toString());
             WeatherValidator.isValidTemperature(String.valueOf(view.getTemp()));
             WeatherValidator.isValidDescription(view.getText());
         }

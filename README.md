@@ -1,4 +1,4 @@
-# Weather Broker client
+# Weather Broker server
 
 Серверная часть приложения "Погодный брокер".
 

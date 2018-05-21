@@ -4,7 +4,7 @@ import ru.bellintegrator.weatherbrokerapi.exception.ValidationException;
 
 public class WeatherValidator {
     private final static String INCORRECT_CITY = "Значение названия города не может быть таким коротким";
-    private final static String INCORRECT_DATE = "Значение даты должно равняться 8 символам. Пример: 15-10-18";
+    private final static String INCORRECT_DATE = "Значение даты должно равняться 8 символам. Пример: dd-MM-yyyy";
     private final static String INCORRECT_TEMPERATURE = "Нельзя использовать значение температуры другой планеты";
     private final static String INCORRECT_DESCRIPTION = "Описание должно быть более полным";
 
@@ -21,7 +21,7 @@ public class WeatherValidator {
     public static boolean isValidDate(String date) throws ValidationException {
         date = date.trim();
 
-        if (date.length() != 8) {
+        if (date.length() < 8) {
             throw new ValidationException(INCORRECT_DATE);
         }
 
