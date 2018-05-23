@@ -29,9 +29,8 @@ public class WeatherHandler {
      * данные из списка записываются в базу данных, и список очищается.
      *
      * @param view
-     * @throws NotFoundException
      */
-    public void addWeatherView(WeatherView view) throws NotFoundException {
+    public void addWeatherView(WeatherView view) {
         if (removeWeatherIfLess(view)) {
             weatherViews.add(view);
         }
@@ -71,9 +70,8 @@ public class WeatherHandler {
 
     /**
      * Добавляет все данные о погоде из списка в базу данных.
-     * @throws NotFoundException
      */
-    private void addWeatherSetToDatabase() throws NotFoundException {
+    private void addWeatherSetToDatabase() {
         weatherService.saveBatch(weatherViews);
     }
 

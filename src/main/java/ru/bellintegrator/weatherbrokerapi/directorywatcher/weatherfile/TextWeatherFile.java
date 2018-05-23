@@ -15,6 +15,12 @@ import java.util.List;
 @Scope("prototype")
 public class TextWeatherFile implements WeatherFile {
 
+    /**
+     * Считывание TXT-файла
+     * @param filePath - полный путь к файлу
+     * @return список представлений погоды, считанных из файла
+     * @throws IOException Если ошибка работы с файлом
+     */
     @Override
     public List<WeatherView> readFile(String filePath) throws IOException {
         File file = new File(filePath);

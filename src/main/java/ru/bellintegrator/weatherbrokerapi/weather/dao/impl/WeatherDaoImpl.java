@@ -26,8 +26,7 @@ import java.util.List;
 @Repository
 public class WeatherDaoImpl implements WeatherDao {
     private final Logger log = LoggerFactory.getLogger(WeatherDao.class);
-    private static final String INSERT_WEATHER = "INSERT INTO weather (temperature, description," +
-            " weather_date, city_id) VALUES (?, ?, ?, ((SELECT id FROM city WHERE name=?)))";
+    private static final String CALL_UPSERT_WEATHER_FUNC = "SELECT set_weather_desc(?, ?, ?, ?)";
 
     private final EntityManager em;
     private final JdbcTemplate jdbcTemplate;
@@ -38,11 +37,21 @@ public class WeatherDaoImpl implements WeatherDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Сохраняет погоду в БД
+     * @param weather - entity-объект погоды
+     */
     @Override
     public void save(Weather weather) {
         em.persist(weather);
     }
 
+    /**
+     * Ищет погоду в БД для заданного города
+     * @param cityName - город
+     * @return возвращает найденую погоду (entity-объект)
+     * @throws NotFoundException Если погода не найдена
+     */
     @Override
     public Weather getWeatherByCity(String cityName) throws NotFoundException {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -63,10 +72,14 @@ public class WeatherDaoImpl implements WeatherDao {
         }
     }
 
+    /**
+     * Добавляет пакетно список объектов погоды в БД через хранимую процедуру
+     * @param viewSet - список объектов погоды
+     */
     @Override
     @Transactional
     public void saveBatch(List<WeatherView> viewSet) {
-        jdbcTemplate.batchUpdate(INSERT_WEATHER, new BatchPreparedStatementSetter() {
+        jdbcTemplate.batchUpdate(CALL_UPSERT_WEATHER_FUNC, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                 WeatherView view = viewSet.get(i);
