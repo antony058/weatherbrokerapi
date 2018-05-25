@@ -3,9 +3,12 @@ package ru.bellintegrator.weatherbrokerapi.directorywatcher.handler;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.bellintegrator.weatherbrokerapi.weather.dao.WeatherDao;
+import ru.bellintegrator.weatherbrokerapi.weather.model.Weather;
 import ru.bellintegrator.weatherbrokerapi.weather.service.WeatherService;
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -13,13 +16,15 @@ import java.util.Set;
 public class WeatherHandler {
     private final WeatherService weatherService;
     private Set<WeatherView> weatherViews;
+    private final WeatherDao weatherDao;
 
     private final static int WEATHER_VIEWS_MAX_SIZE = 2;
 
     @Autowired
-    public WeatherHandler(Set<WeatherView> weatherViews, WeatherService weatherService) {
+    public WeatherHandler(Set<WeatherView> weatherViews, WeatherService weatherService, WeatherDao weatherDao) {
         this.weatherViews = weatherViews;
         this.weatherService = weatherService;
+        this.weatherDao = weatherDao;
     }
 
     /**
@@ -72,7 +77,8 @@ public class WeatherHandler {
      * Добавляет все данные о погоде из списка в базу данных.
      */
     private void addWeatherSetToDatabase() {
-        weatherService.saveBatch(weatherViews);
+//        weatherService.saveBatch(weatherViews);
+        weatherDao.save(new Weather(21, "Sunny", new Date()));
     }
 
 }

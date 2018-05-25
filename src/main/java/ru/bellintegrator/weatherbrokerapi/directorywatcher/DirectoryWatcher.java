@@ -1,5 +1,6 @@
 package ru.bellintegrator.weatherbrokerapi.directorywatcher;
 
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,9 @@ import ru.bellintegrator.weatherbrokerapi.directorywatcher.weatherfile.TextWeath
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.*;
+import java.nio.file.WatchService;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 @Component
@@ -20,6 +24,9 @@ public class DirectoryWatcher {
     private final ExecutorService watchServiceThreadPool;
     private final TextWeatherFile textWeatherFile;
     private final JsonWeatherFile jsonWeatherFile;
+
+    @Autowired
+    private ObjectFactory<WatchTask> watchServiceObjectFactory;
 
     @Value("${weatherfiles.path.text}")
     private String weatherTextFilesPath;
@@ -48,6 +55,12 @@ public class DirectoryWatcher {
 
         watchServiceThreadPool.execute(textFileWatchTask);
         watchServiceThreadPool.execute(jsonFileWatchTask);
+
+        List<WatchTask> watchServices = new ArrayList<>();
+        for (int i=0;i<10;i++) {
+            watchServices.add(watchServiceObjectFactory.getObject());
+        }
+        System.out.println(watchServices);
     }
 
     @PreDestroy

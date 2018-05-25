@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.bellintegrator.weatherbrokerapi.directorywatcher.handler.WeatherHandler;
 import ru.bellintegrator.weatherbrokerapi.directorywatcher.weatherfile.WeatherFile;
-import ru.bellintegrator.weatherbrokerapi.weather.service.WeatherService;
 import ru.bellintegrator.weatherbrokerapi.weather.view.WeatherView;
 
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.util.concurrent.*;
 @Scope("prototype")
 public class WatchTask implements Runnable {
     private final WatchService watchService;
-    private final WeatherService weatherService;
     private final WeatherHandler weatherHandler;
 
     private Path path;
@@ -28,9 +26,8 @@ public class WatchTask implements Runnable {
     private static final int WAIT_FILE_EXIST_TIMEOUT = 5;
 
     @Autowired
-    public WatchTask(WatchService watchService, WeatherService weatherService, WeatherHandler weatherHandler) {
+    public WatchTask(WatchService watchService, WeatherHandler weatherHandler) {
         this.watchService = watchService;
-        this.weatherService = weatherService;
         this.weatherHandler = weatherHandler;
     }
 

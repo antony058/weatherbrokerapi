@@ -29,7 +29,7 @@ import java.util.concurrent.Executors;
 @Profile("develop")
 public class AppDevelopConfig {
 
-    @Bean(initMethod = "init", destroyMethod = "close")
+    /*@Bean(initMethod = "init", destroyMethod = "close")
     @DependsOn("transactionServiceImp")
     public UserTransactionManager jtaTransactionManager() {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
@@ -117,7 +117,7 @@ public class AppDevelopConfig {
         UserTransactionServiceImp transactionServiceImp = new UserTransactionServiceImp(properties);
 
         return transactionServiceImp;
-    }
+    }*/
 
     @Bean
     @Scope("prototype")
